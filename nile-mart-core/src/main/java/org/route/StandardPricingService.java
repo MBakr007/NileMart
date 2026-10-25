@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 public class StandardPricingService implements PricingService{
 
     @Override
-    public BigDecimal getPrice(Product product) {
-        return product.getPrice();
+    public BigDecimal getPrice(Product product, int qty) {
+        return product.getPrice().multiply(BigDecimal.valueOf(qty));
     }
 }

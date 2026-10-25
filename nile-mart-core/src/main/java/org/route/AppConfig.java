@@ -9,7 +9,7 @@ import java.math.BigDecimal;
 
 @Configuration
 @ComponentScan
-//@PropertySource("/beans.xml")
+//@ImportResource("/beans.xml")
 @PropertySource("/application.properties")
 @EnableAspectJAutoProxy
 public class AppConfig {

@@ -18,7 +18,7 @@ public class ProductService {
         this.pricingService = pricingService;
     }
 
-    public BigDecimal getPrice(Product product) {
-        return pricingService.getPrice(product);
+    public BigDecimal getPrice(Product p, int qty) {
+        return pricingService.getPrice(p, qty);
     }
 }

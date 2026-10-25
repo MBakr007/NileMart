@@ -12,12 +12,14 @@ public class PromotionalPricingService implements PricingService{
 
     private final BigDecimal discountAmount;
 
-    public PromotionalPricingService(@Value("${store.vat-rate}") BigDecimal discountAmount) {
+    public PromotionalPricingService(@Value("${store.discount-amount}") BigDecimal discountAmount) {
         this.discountAmount = discountAmount;
     }
 
     @Override
-    public BigDecimal getPrice(Product product) {
-        return product.getPrice().multiply(discountAmount);
+    public BigDecimal getPrice(Product product, int qty) {
+        BigDecimal gross = product.getPrice().multiply(BigDecimal.valueOf(qty));
+        BigDecimal off = gross.multiply(discountAmount).divide(BigDecimal.valueOf(100));
+        return gross.subtract(off);
     }
 }

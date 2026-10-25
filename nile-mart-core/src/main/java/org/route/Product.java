@@ -10,6 +10,7 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @ToString
 @EqualsAndHashCode
+@Builder
 public class Product {
     private  String name;
     private  String sku;

@@ -4,6 +4,7 @@ package org.route;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -24,4 +25,9 @@ public class ExecutionLog {
             throw e;
         }
     }
+
+//    @Before("execution(* org.route.ProductService.*(..))")
+//    public void executeBefore() {
+//        System.out.println("before");
+//    }
 }
