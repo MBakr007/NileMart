@@ -12,8 +12,9 @@ import java.math.BigDecimal;
 @EqualsAndHashCode
 @Builder
 public class Product {
-    private  String name;
-    private  String sku;
-    private  BigDecimal price;
-    private  String category;
+    private String name;
+    private String sku;
+    private BigDecimal price;
+    private String category;
+    private Boolean isActive;
    }

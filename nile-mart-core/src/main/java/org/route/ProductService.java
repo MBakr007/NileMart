@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 
-@Component
+@Service
 public class ProductService {
 
     private final ProductRepository repository;
@@ -18,7 +18,10 @@ public class ProductService {
         this.pricingService = pricingService;
     }
 
-    public BigDecimal getPrice(Product p, int qty) {
-        return pricingService.getPrice(p, qty);
+    public BigDecimal getPrice(String sku, int qty) {
+        Product product = repository.findBySku(sku)
+                .filter(Product::getIsActive)
+                .orElseThrow(() -> new RuntimeException("Product isn't available."));
+        return pricingService.getPrice(product, qty);
     }
 }
