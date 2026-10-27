@@ -16,5 +16,5 @@ public class Product {
     private String sku;
     private BigDecimal price;
     private String category;
-    private Boolean isActive;
+    private boolean isActive;
    }

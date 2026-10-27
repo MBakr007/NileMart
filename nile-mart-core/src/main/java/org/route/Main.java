@@ -36,7 +36,7 @@ public class Main {
                 .price(BigDecimal.valueOf(100))
                 .build();
 
-        System.out.println(productService.getPrice("sku", 2));
+        System.out.println(productService.getPrice("PH-SAM-S25", 2));
 
     }
 }
