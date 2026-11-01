@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Nile Mart</title>
+</head>
+<body>
+
+<form th:action="@{/products}" th:object ="${product}" method="post">
+    <label>SKU      <input  th:field ="*{sku}"></label>
+    <span th:if="${#fields.hasErrors('sku')}" th:errors ="*{sku}"></span>
+    <label>Name     <input  th:field ="*{name}"></label>
+    <span th:if="${#fields.hasErrors('name')}" th:errors ="*{name}"></span>
+    <label>Category <input  th:field ="*{category}"></label>
+    <span th:if="${#fields.hasErrors('category')}" th:errors ="*{category}"></span>
+    <label>Price    <input  th:field ="*{price}"></label>
+    <span th:if="${#fields.hasErrors('price')}" th:errors ="*{price}"></span>
+    <label>Stock    <input  th:field ="*{inStock}"></label>
+    <span th:if="${#fields.hasErrors('inStock')}" th:errors ="*{inStock}"></span>
+    <button type="submit">Save product</button>
+</form>
+<a  th:href="@{/products}">Back to products</a>
+
+
+</body>
+</html>
