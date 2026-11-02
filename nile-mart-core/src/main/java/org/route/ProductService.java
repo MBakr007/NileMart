@@ -42,7 +42,7 @@ public class ProductService {
     public void reduceStock(String sku,int qty){
         Product product=findBySku(sku);
         if(product.getStockQty()<qty) {
-            throw new StoreException("Stock is too low.");
+            throw new StoreException("Insufficient stock.");
         }
         product.setStockQty(product.getStockQty()-qty);
         repository.save(product);
