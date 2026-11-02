@@ -11,7 +11,7 @@ import org.springframework.stereotype.Component;
 @Aspect
 public class ExecutionLog {
 
-    @Around("execution(* org.route.ProductService.*(..)))")
+    @Around("execution(* org.route.ProductService.*(..))")
     public Object executeLog(ProceedingJoinPoint jp) throws Throwable {
         String op = jp.getSignature().toShortString();
         System.out.println(op + " Started");

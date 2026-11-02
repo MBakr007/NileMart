@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
+//@Primary
 public class StandardPricingService implements PricingService{
 
     @Override

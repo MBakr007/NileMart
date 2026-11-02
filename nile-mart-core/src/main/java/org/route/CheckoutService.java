@@ -16,6 +16,8 @@ public class CheckoutService {
     private final OrderRegistry orderRegistry;
     private final List<NotificationSender> notificationSenders;
 
+
+
     public void placeOrder(ShoppingCart cart, Governorate governorate){
         if(cart.isEmpty()){
             throw  new StoreException("Cart is empty.");
@@ -32,6 +34,10 @@ public class CheckoutService {
         BigDecimal shippingFee=shippingQuoteService.quote(governorate,subtotal);
         BigDecimal total=subtotal.add(vat).add(shippingFee).setScale(2, RoundingMode.HALF_UP);
 
+//        System.out.println("subtotal: "+subtotal);
+//        System.out.println("vat: "+vat);
+//        System.out.println("shippingfee: "+shippingFee);
+//        System.out.println("total: "+total);
         //reduce stock
         for(var lineEntry: cart.getLines().entrySet()){
             Product product=productService.findBySku(lineEntry.getKey());

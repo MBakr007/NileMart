@@ -2,6 +2,7 @@ package org.route;
 
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -14,8 +15,10 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class ShoppingCart {
-    private final String cartNumber;
-    private final Customer customer;
+    @Setter
+    private  int cartNumber;
+    @Setter
+    private  Customer customer;
     @Getter(AccessLevel.NONE)   // prevent lombok from creating a getter for this field
     private final Map<String,Integer> lines; // SKU, qty
     @Getter(AccessLevel.NONE)
@@ -24,10 +27,7 @@ public class ShoppingCart {
     private final PricingService pricingService;
     private final int maxQtyPerProduct;
 
-    public ShoppingCart(String cartNumber, Customer customer,
-                        ProductService productService,PricingService pricingService, @Value("${store.max-quantity-per-product}") int maxQtyPerProduct) {
-        this.cartNumber = cartNumber;
-        this.customer = customer;
+    public ShoppingCart(ProductService productService,PricingService pricingService, @Value("${store.max-quantity-per-product}") int maxQtyPerProduct) {
         this.productService = productService;
         this.pricingService=pricingService;
         this.maxQtyPerProduct = maxQtyPerProduct;
@@ -43,7 +43,7 @@ public class ShoppingCart {
 
        int productStockQty = product.getStockQty();
        if(productStockQty==0 )
-           throw new StoreException("The product's stock is 0.");
+           throw new StoreException("Out of stock.");
 
        int currentQty=lines.getOrDefault(sku,0);
        int newQty=currentQty+qty;

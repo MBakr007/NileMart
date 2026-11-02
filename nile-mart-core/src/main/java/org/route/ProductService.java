@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,7 +29,13 @@ public class ProductService {
     }
 
     public List<Product> findAll(){
-        return repository.findAll();
+        List<Product> availableProducts = new ArrayList<>();
+        for (Product product : repository.findAll()) {
+            if (product.getStockQty()> 0) {
+                availableProducts.add(product);
+            }
+        }
+        return new ArrayList<>(availableProducts);
     }
 
     public Product findBySku(String sku){
