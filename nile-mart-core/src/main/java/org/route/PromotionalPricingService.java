@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.math.BigDecimal;
 
 @Component
-@Primary
+//@Primary
 public class PromotionalPricingService implements PricingService{
 
     private final BigDecimal discountAmount;
