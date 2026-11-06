@@ -1,4 +1,6 @@
-package org.route;
+package org.route.service;
+
+import org.route.model.Product;
 
 import java.math.BigDecimal;
 
