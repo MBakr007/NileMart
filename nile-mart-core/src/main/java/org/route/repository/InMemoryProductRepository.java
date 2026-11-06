@@ -19,81 +19,82 @@ public class InMemoryProductRepository implements ProductRepository {
     private final Map<String, Product> store = new LinkedHashMap<>();
 
     /**
-     * Loads the eight catalogue products. Public so the plain-Java ObjectFactory
-     * can prepare the repository without a Spring container.
+     * Loads the eight catalogue products exactly as specified by the assignment.
+     * Public so the plain-Java ObjectFactory can prepare the repository without
+     * a Spring container.
      */
     @PostConstruct
     public void seedProducts() {
         save(Product.builder()
-                .name("Smartphone X5 128GB")
                 .sku("PH-X5-128")
-                .price(new BigDecimal("16000.00"))
+                .name("Smartphone X5 128GB")
                 .category("Electronics")
+                .price(new BigDecimal("16000.00"))
+                .stockQuantity(12)
                 .isActive(true)
-                .stockQuantity(25)
                 .build());
 
         save(Product.builder()
+                .sku("ACC-CHG-20W")
                 .name("Fast Charger 20W")
-                .sku("AC-CH20")
-                .price(new BigDecimal("800.00"))
-                .category("Accessories")
-                .isActive(true)
-                .stockQuantity(50)
-                .build());
-
-        save(Product.builder()
-                .name("Wireless Earbuds Pro")
-                .sku("AC-EB-PRO")
-                .price(new BigDecimal("1200.00"))
-                .category("Audio")
-                .isActive(true)
-                .stockQuantity(8)
-                .build());
-
-        save(Product.builder()
-                .name("Cotton Galabeya")
-                .sku("CL-GAL-COT")
-                .price(new BigDecimal("600.00"))
-                .category("Clothing")
-                .isActive(true)
+                .category("Electronics")
+                .price(new BigDecimal("650.00"))
                 .stockQuantity(40)
+                .isActive(true)
                 .build());
 
         save(Product.builder()
+                .sku("ACC-BUDS-6")
+                .name("Wireless Earbuds")
+                .category("Electronics")
+                .price(new BigDecimal("1100.00"))
+                .stockQuantity(8)
+                .isActive(true)
+                .build());
+
+        save(Product.builder()
+                .sku("FSH-GAL-001")
+                .name("Cotton Galabeya")
+                .category("Fashion")
+                .price(new BigDecimal("900.00"))
+                .stockQuantity(25)
+                .isActive(true)
+                .build());
+
+        save(Product.builder()
+                .sku("HOM-PAN-28")
                 .name("Non-stick Frying Pan 28cm")
-                .sku("HK-FP-28")
-                .price(new BigDecimal("450.00"))
-                .category("Kitchen")
-                .isActive(true)
+                .category("Home & Kitchen")
+                .price(new BigDecimal("1200.00"))
                 .stockQuantity(3)
+                .isActive(true)
                 .build());
 
         save(Product.builder()
+                .sku("HOM-SPC-RCK")
+                .name("Wooden Spice Rack")
+                .category("Home & Kitchen")
+                .price(new BigDecimal("750.00"))
+                .stockQuantity(10)
+                .isActive(true)
+                .build());
+
+        save(Product.builder()
+                .sku("BTY-SUN-50")
                 .name("Sun Cream SPF50")
-                .sku("BT-SC-50")
-                .price(new BigDecimal("250.00"))
                 .category("Beauty")
-                .isActive(true)
-                .stockQuantity(0)
-                .build());
-
-        save(Product.builder()
-                .name("Egyptian Cotton Towel Set")
-                .sku("HM-TW-SET")
                 .price(new BigDecimal("350.00"))
-                .category("Home")
+                .stockQuantity(0)
                 .isActive(true)
-                .stockQuantity(30)
                 .build());
 
         save(Product.builder()
-                .name("Arabica Coffee 1kg")
-                .sku("GR-COF-1K")
-                .price(new BigDecimal("420.00"))
-                .category("Grocery")
+                .sku("BK-CAI-TRI")
+                .name("The Cairo Trilogy")
+                .category("Books")
+                .price(new BigDecimal("450.00"))
+                .stockQuantity(15)
                 .isActive(true)
-                .stockQuantity(60)
                 .build());
     }
 
