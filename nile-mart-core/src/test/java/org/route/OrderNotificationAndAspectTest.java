@@ -44,7 +44,7 @@ class OrderNotificationAndAspectTest {
     @Test
     void orderNumbersAndRevenueFollowTheSpecification() {
         Order first = checkoutService.placeOrder(cart(1, "Mona", "01000000001", "mona@example.com",
-                "AC-CH20", 2, "CL-GAL-COT", 1), Governorate.GIZA);
+                "ACC-CHG-20W", 2, "FSH-GAL-001", 1), Governorate.GIZA);
         Order second = checkoutService.placeOrder(cart(2, "Omar", "01000000002", null,
                 "PH-X5-128", 1), Governorate.ASWAN);
 
@@ -72,7 +72,7 @@ class OrderNotificationAndAspectTest {
     @Test
     void notificationFormatAndEmailFallbackAreCorrect() {
         ShoppingCart cart = cart(1, "Mona", "01000000001", null,
-                "AC-CH20", 2, "CL-GAL-COT", 1);
+                "ACC-CHG-20W", 2, "FSH-GAL-001", 1);
 
         ByteArrayOutputStream output = capture(() ->
                 checkoutService.placeOrder(cart, Governorate.GIZA));
@@ -86,7 +86,7 @@ class OrderNotificationAndAspectTest {
     @Test
     void emailSenderRunsWhenEmailExists() {
         ShoppingCart cart = cart(1, "Mona", "01000000001", "mona@example.com",
-                "AC-CH20", 2, "CL-GAL-COT", 1);
+                "ACC-CHG-20W", 2, "FSH-GAL-001", 1);
 
         String log = capture(() -> checkoutService.placeOrder(cart, Governorate.GIZA)).toString();
 
@@ -96,7 +96,7 @@ class OrderNotificationAndAspectTest {
     @Test
     void aspectsLogAuditAndExecutionTiming() {
         ShoppingCart cart = cart(7, "Mona", "01000000001", "mona@example.com",
-                "AC-CH20", 2, "CL-GAL-COT", 1);
+                "ACC-CHG-20W", 2, "FSH-GAL-001", 1);
 
         String log = capture(() -> checkoutService.placeOrder(cart, Governorate.GIZA)).toString();
 
@@ -108,7 +108,7 @@ class OrderNotificationAndAspectTest {
     @Test
     void orderLinesAreDefensivelyCopiedAndImmutable() {
         Map<String, Integer> source = new LinkedHashMap<>();
-        source.put("AC-CH20", 2);
+        source.put("ACC-CHG-20W", 2);
 
         Order order = new Order("NM-20261107-00001",
                 new Customer("Mona", "01000000001", null),
@@ -119,9 +119,9 @@ class OrderNotificationAndAspectTest {
                 new BigDecimal("50.00"),
                 new BigDecimal("1874.00"));
 
-        source.put("CL-GAL-COT", 1);
+        source.put("FSH-GAL-001", 1);
 
-        assertEquals(Map.of("AC-CH20", 2), order.lines());
+        assertEquals(Map.of("ACC-CHG-20W", 2), order.lines());
         assertThrows(UnsupportedOperationException.class,
                 () -> order.lines().put("PH-X5-128", 1));
     }

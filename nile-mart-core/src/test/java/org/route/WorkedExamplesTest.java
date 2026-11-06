@@ -34,8 +34,8 @@ class WorkedExamplesTest {
     @Test
     void standardPricing_twoChargersAndGalabeyaToGiza() {
         ShoppingCart cart = newCart("Mona", "01000000001", "mona@example.com");
-        cart.addItem("AC-CH20", 2);
-        cart.addItem("CL-GAL-COT", 1);
+        cart.addItem("ACC-CHG-20W", 2);
+        cart.addItem("FSH-GAL-001", 1);
 
         Order order = checkoutService.placeOrder(cart, Governorate.GIZA);
 

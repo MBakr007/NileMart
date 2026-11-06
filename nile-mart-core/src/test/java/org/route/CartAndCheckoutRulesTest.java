@@ -42,7 +42,7 @@ class CartAndCheckoutRulesTest {
         ShoppingCart cart = newCart(1);
 
         StoreException error = assertThrows(StoreException.class,
-                () -> cart.addItem("BT-SC-50", 1));
+                () -> cart.addItem("BTY-SUN-50", 1));
 
         assertTrue(error.getMessage().contains("out of stock"));
         assertTrue(cart.isEmpty());
@@ -53,7 +53,7 @@ class CartAndCheckoutRulesTest {
         ShoppingCart cart = newCart(1);
 
         StoreException error = assertThrows(StoreException.class,
-                () -> cart.addItem("HK-FP-28", 4));
+                () -> cart.addItem("HOM-PAN-28", 4));
 
         assertTrue(error.getMessage().toLowerCase().contains("only 3 available"));
         assertTrue(cart.isEmpty());
@@ -64,7 +64,7 @@ class CartAndCheckoutRulesTest {
         ShoppingCart cart = newCart(1);
 
         StoreException error = assertThrows(StoreException.class,
-                () -> cart.addItem("AC-CH20", 11));
+                () -> cart.addItem("ACC-CHG-20W", 11));
 
         assertTrue(error.getMessage().contains("Maximum 10"));
         assertTrue(cart.isEmpty());
@@ -74,11 +74,11 @@ class CartAndCheckoutRulesTest {
     void repeatedSkuMergesIntoOneLine() {
         ShoppingCart cart = newCart(1);
 
-        cart.addItem("AC-CH20", 1);
-        cart.addItem("AC-CH20", 2);
+        cart.addItem("ACC-CHG-20W", 1);
+        cart.addItem("ACC-CHG-20W", 2);
 
         assertEquals(1, cart.getLines().size());
-        assertEquals(3, cart.getLines().get("AC-CH20"));
+        assertEquals(3, cart.getLines().get("ACC-CHG-20W"));
     }
 
     @Test
@@ -88,7 +88,7 @@ class CartAndCheckoutRulesTest {
 
         assertNotSame(first, second);
 
-        first.addItem("AC-CH20", 1);
+        first.addItem("ACC-CHG-20W", 1);
 
         assertTrue(second.isEmpty());
         assertEquals(1, first.getLines().size());
@@ -98,19 +98,19 @@ class CartAndCheckoutRulesTest {
     void failedSecondCheckoutLeavesStockUntouched() {
         ShoppingCart first = newCart(1);
         ShoppingCart second = newCart(2);
-        first.addItem("AC-EB-PRO", 2);
-        second.addItem("AC-EB-PRO", 7);
+        first.addItem("ACC-BUDS-6", 2);
+        second.addItem("ACC-BUDS-6", 7);
 
         Order secondOrder = checkoutService.placeOrder(second, Governorate.CAIRO);
-        assertEquals(7, secondOrder.lines().get("AC-EB-PRO"));
+        assertEquals(7, secondOrder.lines().get("ACC-BUDS-6"));
 
         StoreException error = assertThrows(StoreException.class,
                 () -> checkoutService.placeOrder(first, Governorate.CAIRO));
 
         assertTrue(error.getMessage().contains("only 1 available"));
-        Product earbuds = productService.findBySku("AC-EB-PRO");
+        Product earbuds = productService.findBySku("ACC-BUDS-6");
         assertEquals(1, earbuds.getStockQuantity());
-        assertEquals(2, first.getLines().get("AC-EB-PRO"));
+        assertEquals(2, first.getLines().get("ACC-BUDS-6"));
     }
 
     @Test

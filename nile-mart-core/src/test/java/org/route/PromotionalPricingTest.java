@@ -38,8 +38,8 @@ class PromotionalPricingTest {
         ShoppingCart cart = context.getBean(ShoppingCart.class);
         cart.setCartNumber(1);
         cart.setCustomer(new Customer("Mona", "01000000001", "mona@example.com"));
-        cart.addItem("AC-CH20", 2);
-        cart.addItem("CL-GAL-COT", 1);
+        cart.addItem("ACC-CHG-20W", 2);
+        cart.addItem("FSH-GAL-001", 1);
 
         Order order = context.getBean(CheckoutService.class)
                 .placeOrder(cart, Governorate.GIZA);
