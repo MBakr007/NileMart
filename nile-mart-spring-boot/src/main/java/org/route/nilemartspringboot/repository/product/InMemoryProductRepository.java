@@ -1,4 +1,4 @@
-package org.route.nilemartspringboot.repository;
+package org.route.nilemartspringboot.repository.product;
 
 import jakarta.annotation.PostConstruct;
 import org.route.nilemartspringboot.model.Product;

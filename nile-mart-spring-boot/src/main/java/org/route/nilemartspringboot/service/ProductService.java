@@ -2,7 +2,7 @@ package org.route.nilemartspringboot.service;
 
 import org.route.nilemartspringboot.config.StoreProperties;
 import org.route.nilemartspringboot.model.Product;
-import org.route.nilemartspringboot.repository.ProductRepository;
+import org.route.nilemartspringboot.repository.product.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
