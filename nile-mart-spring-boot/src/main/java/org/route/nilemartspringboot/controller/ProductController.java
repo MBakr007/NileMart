@@ -41,7 +41,7 @@ public class ProductController {
             result.rejectValue("sku", "400", "sku is already exist");
         }
         if (result.hasErrors()) {
-            return "redirect:/new";
+            return "productForm";
         }
         productService.saveProduct(product);
         return "redirect:/products";
