@@ -1,11 +1,13 @@
 package org.route.nilemartspringboot.exception;
 
+import lombok.Getter;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.ResponseStatus;
 
-@ResponseStatus(HttpStatus.NOT_FOUND)
-public class CategoryNotFoundException extends Exception{
-    public CategoryNotFoundException(String message) {
+@Getter
+public class CategoryNotFoundException extends RuntimeException {
+    private final HttpStatus status;
+    public CategoryNotFoundException(String message, HttpStatus status) {
         super(message);
+        this.status = status;
     }
 }

@@ -1,40 +1,38 @@
 package org.route.nilemartspringboot.controller;
 
-import org.route.nilemartspringboot.exception.CategoryNotFoundException;
-import org.route.nilemartspringboot.model.Category;
+import org.route.nilemartspringboot.dto.category.AddCategoryRequest;
+import org.route.nilemartspringboot.dto.category.CategoryResponse;
 import org.route.nilemartspringboot.service.CategoryService;
-import org.route.nilemartspringboot.service.ProductService;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.FileNotFoundException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/categories")
+@RequestMapping("/api/v1")
 public class CategoryController {
 
     private final CategoryService categoryService;
 
-    public CategoryController(CategoryService categoryService, ProductService productService) {
+    public CategoryController(CategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
     @GetMapping
-    public List<Category> getCategories() {
+    public List<CategoryResponse> getCategories() {
         return categoryService.getAllCategories();
     }
 
-    @GetMapping("/{id}")
-    public Category getCategoryById(@PathVariable String id) throws CategoryNotFoundException {
+    @GetMapping("/categories/{id}")
+    public CategoryResponse getCategoryById(@PathVariable String id) {
         return categoryService.getCategoryById(id);
     }
 
-    @PostMapping
-    public void saveCategory(@RequestBody Category category) {
-        categoryService.saveCategory(category);
+    @PostMapping("/categories")
+    public void saveCategory(@RequestBody AddCategoryRequest request) {
+        categoryService.saveCategory(request);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/categories/{id}")
     public void deleteCategoryById(@PathVariable String id) {
         categoryService.deleteCategory(id);
     }

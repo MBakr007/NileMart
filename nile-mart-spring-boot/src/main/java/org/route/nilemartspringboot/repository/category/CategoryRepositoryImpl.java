@@ -1,13 +1,14 @@
 package org.route.nilemartspringboot.repository.category;
 
 import jakarta.annotation.PostConstruct;
+import net.datafaker.Faker;
 import org.route.nilemartspringboot.exception.CategoryNotFoundException;
 import org.route.nilemartspringboot.model.Category;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Repository;
 
-import java.io.FileNotFoundException;
 import java.util.List;
+import java.util.Random;
 
 @Repository
 public class CategoryRepositoryImpl implements CategoryRepository{
@@ -20,28 +21,21 @@ public class CategoryRepositoryImpl implements CategoryRepository{
 
     @PostConstruct
     public void init(){
-        Category c1 = Category.builder()
-                .id("C001")
-                .name("Food & Drinks")
-                .slug("food-drinks")
-                .active(true)
-                .build();
-        Category c2 = Category.builder()
-                .id("C002")
-                .name("Clothing")
-                .slug("clothing")
-                .active(true)
-                .build();
-        Category c3 = Category.builder()
-                .id("C003")
-                .name("Books & Media")
-                .slug("books-media")
-                .active(false)
-                .build();
+        Faker faker = new Faker();
+        Random random = new Random();
+        for (int i = 0; i < 30; i++) {
 
-        categoryList.add(c1);
-        categoryList.add(c2);
-        categoryList.add(c3);
+            String name = faker.commerce().department();
+
+            Category category = Category.builder()
+                    .id(String.valueOf(i + 1))
+                    .name(name)
+                    .slug(name.toLowerCase().replace(" ", "-"))
+                    .active(random.nextBoolean())
+                    .build();
+
+            categoryList.add(category);
+        }
     }
 
     @Override
@@ -50,11 +44,11 @@ public class CategoryRepositoryImpl implements CategoryRepository{
     }
 
     @Override
-    public Category findById(String id) throws CategoryNotFoundException {
+    public Category findById(String id) {
         return categoryList.stream()
                 .filter(c -> c.getId().equals(id))
                 .findFirst()
-                .orElseThrow(() -> new CategoryNotFoundException("Category not found"));
+                .orElseThrow(() -> new CategoryNotFoundException("Category with id " + id + " not found.", HttpStatus.NOT_FOUND));
     }
 
     @Override

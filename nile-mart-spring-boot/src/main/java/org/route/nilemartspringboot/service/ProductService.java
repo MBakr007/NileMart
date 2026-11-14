@@ -1,6 +1,9 @@
 package org.route.nilemartspringboot.service;
 
 import org.route.nilemartspringboot.config.StoreProperties;
+import org.route.nilemartspringboot.dto.PageResponse;
+import org.route.nilemartspringboot.dto.product.AddProductRequest;
+import org.route.nilemartspringboot.mapper.ProductMapper;
 import org.route.nilemartspringboot.model.Product;
 import org.route.nilemartspringboot.repository.product.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -13,11 +16,13 @@ import java.util.List;
 public class ProductService {
     private final ProductRepository productRepository;
     private final StoreProperties storeProperties;
+    private final ProductMapper productMapper;
 
 
-    public ProductService(ProductRepository productRepository, StoreProperties storeProperties) {
+    public ProductService(ProductRepository productRepository, StoreProperties storeProperties, ProductMapper productMapper) {
         this.productRepository = productRepository;
         this.storeProperties = storeProperties;
+        this.productMapper = productMapper;
     }
 
     public List<Product> getAvailableProducts() {
@@ -29,8 +34,24 @@ public class ProductService {
         return availableProducts;
     }
 
-    public void saveProduct(Product product) {
-        productRepository.save(product);
+    public PageResponse<Product> getAllProducts(Integer size, Integer page) {
+
+        List<Product> availableProducts = productRepository.findAll();
+
+        int start = page * size;
+        int end = Math.min(start + size, availableProducts.size());
+
+        PageResponse<Product> pageResponse = new PageResponse<>();
+        pageResponse.setPage(page);
+        pageResponse.setSize(size);
+        pageResponse.setContent(availableProducts.subList(start, end));
+        pageResponse.setTotalElements(availableProducts.size());
+        return pageResponse;
+
+    }
+
+    public void saveProduct(AddProductRequest request) {
+        productRepository.save(productMapper.toProduct(request));
     }
 
     public boolean isProductExist(String sku) {
@@ -46,5 +67,9 @@ public class ProductService {
             products.add(p);
         }
         return products;
+    }
+
+    public Product getProductById(String sku) {
+        return productRepository.findBySku(sku);
     }
 }

@@ -1,18 +1,26 @@
 package org.route.nilemartspringboot.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import org.route.nilemartspringboot.dto.PageResponse;
+import org.route.nilemartspringboot.dto.product.AddProductRequest;
 import org.route.nilemartspringboot.model.Product;
 import org.route.nilemartspringboot.service.ProductService;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-@Controller
+@RestController
+@RequestMapping("/api/v1")
 public class ProductController {
 
     private final ProductService productService;
@@ -21,38 +29,31 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/products")
-    public String getProducts(Model model) {
-        List<Product> products =  productService.getAvailableProducts();
-        model.addAttribute("availableProducts", products);
-        return "products";
+    @GetMapping("/products/available")
+    public ResponseEntity<List<Product>> getAvailableProducts() {
+        return ResponseEntity.ok(productService.getAvailableProducts());
     }
 
-    @GetMapping("/new")
-    public String showForm(Model model) {
-        model.addAttribute("product", new Product());
-        return "productForm";
-    }
 
     @PostMapping("/products")
-    public String addProduct(@ModelAttribute("product") @Valid Product product,
-                             BindingResult result) {
-        if (productService.isProductExist(product.getSku())) {
-            result.rejectValue("sku", "400", "sku is already exist");
-        }
-        if (result.hasErrors()) {
-            return "productForm";
-        }
-        productService.saveProduct(product);
-        return "redirect:/products";
+    public ResponseEntity<?> addProduct(@Valid @RequestBody AddProductRequest request) {
+        productService.saveProduct(request);
+        return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
 
-    @GetMapping("/product/vat")
-    public String getProductVat(Model model) {
-        List<Product> products =  productService.getAllProductWithVat();
-        model.addAttribute("availableProducts", products);
-        return "products";
+    @GetMapping("/products/vat")
+    public ResponseEntity<List<Product>> getProductVat() {
+        return ResponseEntity.ok(productService.getAllProductWithVat());
+    }
+
+
+    @GetMapping("/products")
+    public ResponseEntity<PageResponse<Product>> getAllProducts(@RequestParam(defaultValue = "10", required = false)
+                                                                @Min(1) @Max(10) int size,
+                                                                @RequestParam(defaultValue = "0", required = false)
+                                                                @Min(0) int page) {
+        return ResponseEntity.ok(productService.getAllProducts(size, page));
     }
 
 }

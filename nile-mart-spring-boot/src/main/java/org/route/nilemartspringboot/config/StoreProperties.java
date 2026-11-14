@@ -12,4 +12,5 @@ import java.math.BigDecimal;
 @ConfigurationProperties(prefix = "store")
 public class StoreProperties {
     BigDecimal vatRate;
+    Integer maxProductQuantity;
 }
