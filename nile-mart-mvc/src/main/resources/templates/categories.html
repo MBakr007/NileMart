@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Categories - NileMart</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f5f5f5; }
+        h1 { color: #333; }
+        table { width: 100%; border-collapse: collapse; background: white; }
+        th, td { padding: 12px; border: 1px solid #ddd; text-align: left; }
+        th { background-color: #333; color: white; }
+        tbody tr:nth-child(even) { background-color: #f2f2f2; }
+    </style>
+</head>
+<body>
+
+<nav aria-label="Main navigation">
+    <a th:href="@{/products}">Products</a> |
+    <a th:href="@{/categories}">Categories</a> |
+    <a th:href="@{/brands}">Brands</a>
+</nav>
+
+<h1>Categories</h1>
+<p><a th:href="@{/categories/new}">New category</a></p>
+
+<table>
+    <thead>
+    <tr>
+        <th>Name</th>
+        <th>Slug</th>
+        <th>Parent</th>
+        <th>Order</th>
+        <th>Active</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="item : ${categories}">
+        <td th:text="${item.displayName}"></td>
+        <td th:text="${item.category.slug}"></td>
+        <td th:text="${item.parentName}"></td>
+        <td th:text="${item.category.displayOrder}"></td>
+        <td th:text="${item.category.active ? 'Yes' : 'No'}"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>

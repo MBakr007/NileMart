@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Nile-Mart</title>
@@ -40,26 +40,35 @@
 
 <body>
 
+<nav aria-label="Main navigation">
+    <a th:href="@{/products}">Products</a> |
+    <a th:href="@{/categories}">Categories</a> |
+    <a th:href="@{/brands}">Brands</a>
+</nav>
+
 <h1>Available Products</h1>
+<p><a th:href="@{/new}">New product</a></p>
 
 <table>
     <thead>
     <tr>
         <th>SKU</th>
         <th>Name</th>
-        <th>Price</th>
+        <th>Price (EGP)</th>
         <th>Stock</th>
         <th>Category</th>
+        <th>Brand</th>
     </tr>
     </thead>
 
     <tbody>
-    <tr th:each="product : ${availableProducts}">
-        <td th:text="${product.sku}"></td>
-        <td th:text="${product.name}"></td>
-        <td th:text="${product.price}"></td>
-        <td th:text="${product.inStock}"></td>
-        <td th:text="${product.category}"></td>
+    <tr th:each="item : ${availableProducts}">
+        <td th:text="${item.product.sku}"></td>
+        <td th:text="${item.product.name}"></td>
+        <td th:text="${item.product.price}"></td>
+        <td th:text="${item.product.inStock}"></td>
+        <td th:text="${item.categoryName}"></td>
+        <td th:text="${item.brandName}"></td>
     </tr>
     </tbody>
 </table>
