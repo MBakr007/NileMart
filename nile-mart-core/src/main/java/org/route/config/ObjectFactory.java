@@ -1,4 +1,9 @@
-package org.route;
+package org.route.config;
+
+import org.route.repository.InMemoryProductRepository;
+import org.route.service.ProductService;
+import org.route.service.PromotionalPricingService;
+import org.route.service.StandardPricingService;
 
 import java.math.BigDecimal;
 

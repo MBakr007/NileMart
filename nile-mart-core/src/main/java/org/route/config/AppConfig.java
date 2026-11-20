@@ -1,10 +1,8 @@
-package org.route;
+package org.route.config;
 
 
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
-
-import java.math.BigDecimal;
 
 
 @Configuration

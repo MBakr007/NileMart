@@ -1,5 +1,7 @@
-package org.route;
+package org.route.service;
 
+import org.route.model.Product;
+import org.route.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import java.math.BigDecimal;

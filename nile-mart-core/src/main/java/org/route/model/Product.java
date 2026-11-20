@@ -1,4 +1,4 @@
-package org.route;
+package org.route.model;
 
 import lombok.*;
 

@@ -6,14 +6,14 @@
     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
 
-    <bean id="standardPricing" class="org.route.StandardPricingService"/>
+    <bean id="standardPricing" class="org.route.service.StandardPricingService"/>
     
-    <bean id="promotionalPricing" class="org.route.PromotionalPricingService">
+    <bean id="promotionalPricing" class="org.route.service.PromotionalPricingService">
     </bean>
 
-    <bean id="inMemoryRepo" class="org.route.InMemoryProductRepository"/>
+    <bean id="inMemoryRepo" class="org.route.repository.InMemoryProductRepository"/>
 
-    <bean id="productService" class="org.route.ProductService" scope="prototype">
+    <bean id="productService" class="org.route.service.ProductService" scope="prototype">
         <constructor-arg ref="standardPricing"/>
         <constructor-arg ref="inMemoryRepo"/>
     </bean>

@@ -1,6 +1,7 @@
-package org.route;
+package org.route.repository;
 
 import jakarta.annotation.PostConstruct;
+import org.route.model.Product;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
