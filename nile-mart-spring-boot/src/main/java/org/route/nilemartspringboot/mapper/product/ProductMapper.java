@@ -1,4 +1,4 @@
-package org.route.nilemartspringboot.mapper;
+package org.route.nilemartspringboot.mapper.product;
 
 import org.mapstruct.Mapper;
 import org.route.nilemartspringboot.dto.product.AddProductRequest;

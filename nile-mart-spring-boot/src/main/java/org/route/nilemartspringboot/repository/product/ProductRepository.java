@@ -1,13 +1,9 @@
 package org.route.nilemartspringboot.repository.product;
 
 import org.route.nilemartspringboot.model.Product;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface ProductRepository {
-    List<Product> findAll();
-
-    Product findBySku(String sku);
-
-    void save(Product product);
+@Repository
+public interface ProductRepository extends JpaRepository<Product, Integer> {
 }

@@ -1,4 +1,4 @@
-package org.route.nilemartspringboot.config;
+package org.route.nilemartspringboot.properties;
 
 
 import lombok.Getter;

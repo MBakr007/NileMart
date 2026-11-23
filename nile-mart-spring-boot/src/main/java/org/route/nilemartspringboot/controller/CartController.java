@@ -1,13 +1,13 @@
 package org.route.nilemartspringboot.controller;
 
 
-import jakarta.validation.Valid;
-import org.route.nilemartspringboot.dto.cart.CartItemRequest;
 import org.route.nilemartspringboot.dto.cart.CartResponse;
 import org.route.nilemartspringboot.service.CartService;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -24,9 +24,9 @@ public class CartController {
         return ResponseEntity.ok(cartService.getCart(customerId));
     }
 
-    @PostMapping("/cart")
-    public ResponseEntity<?> addItem(@RequestBody @Valid CartItemRequest cartItemRequest) {
-        cartService.addItem(cartItemRequest);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
-    }
+//    @PostMapping("/cart")
+//    public ResponseEntity<?> addItem(@RequestBody @Valid CartItemRequest cartItemRequest) {
+//        cartService.addItem(cartItemRequest);
+//        return ResponseEntity.status(HttpStatus.CREATED).build();
+//    }
 }

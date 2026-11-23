@@ -1,16 +1,9 @@
 package org.route.nilemartspringboot.repository.category;
 
 import org.route.nilemartspringboot.model.Category;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-import java.util.List;
-
-public interface CategoryRepository {
-
-    List<Category> findAll();
-
-    Category findById(String id);
-
-    void save(Category category);
-
-    void delete(String id);
+@Repository
+public interface CategoryRepository extends JpaRepository<Category, Integer> {
 }

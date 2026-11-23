@@ -11,8 +11,34 @@ import java.time.LocalDateTime;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({ProductException.class, CartException.class})
-    public ResponseEntity<ErrorResponse> handleException(ProductException ex, HttpServletRequest request) {
+    @ExceptionHandler(CartException.class)
+    public ResponseEntity<ErrorResponse> handleException(CartException ex, HttpServletRequest request) {
+        return new ResponseEntity<>(
+                ErrorResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .message(ex.getMessage())
+                        .status(ex.getHttpStatus())
+                        .path(request.getRequestURI())
+                        .error(request.getMethod())
+                        .build(),
+                ex.getHttpStatus());
+    }
+
+    @ExceptionHandler(CategoryException.class)
+    public ResponseEntity<ErrorResponse> handleCategoryException(CategoryException ex, HttpServletRequest request) {
+        return new ResponseEntity<>(
+                ErrorResponse.builder()
+                        .timestamp(LocalDateTime.now())
+                        .message(ex.getMessage())
+                        .status(ex.getStatus())
+                        .path(request.getRequestURI())
+                        .error(request.getMethod())
+                        .build(),
+                ex.getStatus());
+    }
+
+    @ExceptionHandler(ProductException.class)
+    public ResponseEntity<ErrorResponse> handleProductException(ProductException ex, HttpServletRequest request) {
         return new ResponseEntity<>(
                 ErrorResponse.builder()
                         .timestamp(LocalDateTime.now())
