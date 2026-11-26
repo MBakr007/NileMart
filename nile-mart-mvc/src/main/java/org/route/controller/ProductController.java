@@ -1,6 +1,5 @@
 package org.route.controller;
 
-
 import jakarta.validation.Valid;
 import org.route.model.Product;
 import org.route.service.ProductService;
@@ -10,8 +9,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.List;
 
 @Controller
 public class ProductController {
@@ -24,27 +21,32 @@ public class ProductController {
 
     @GetMapping("/products")
     public String getProducts(Model model) {
-        List<Product> products =  productService.getAvailableProducts();
-        model.addAttribute("availableProducts", products);
+        model.addAttribute("availableProducts", productService.getAvailableProducts());
         return "products";
     }
 
-    @GetMapping("/new")
+    @GetMapping({"/products/new", "/new"})
     public String showForm(Model model) {
         model.addAttribute("product", new Product());
+        addFormOptions(model);
         return "productForm";
     }
 
     @PostMapping("/products")
     public String addProduct(@ModelAttribute("product") @Valid Product product,
-                             BindingResult result) {
-        if (productService.isProductExist(product.getSku())) {
-            result.rejectValue("sku", "400", "sku is already exist");
-        }
+                             BindingResult result, Model model) {
+        FormErrors.rejectAll(result,
+                productService.validate(product, FormErrors.fieldsWithErrors(result)));
         if (result.hasErrors()) {
-            return "redirect:/new";
+            addFormOptions(model);
+            return "productForm";
         }
         productService.saveProduct(product);
         return "redirect:/products";
+    }
+
+    private void addFormOptions(Model model) {
+        model.addAttribute("subCategories", productService.getSubCategories());
+        model.addAttribute("activeBrands", productService.getActiveBrands());
     }
 }

@@ -6,48 +6,47 @@ import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
-
+import java.util.Map;
 
 @Repository
 public class InMemoryProductRepository implements ProductRepository {
-    List<Product> myProducts = new ArrayList<>();
+
+    private final Map<String, Product> products = new LinkedHashMap<>();
 
     @PostConstruct
-    void init() {
-        myProducts.add(Product.builder()
-                .sku("P002")
-                .name("Desk Lamp")
-                .price(BigDecimal.valueOf(500))
-                .inStock(10)
-                .category("furniture")
-                .build());
-        myProducts.add(Product.builder()
-                .sku("P003")
-                .name("ASUS TUF")
-                .price(BigDecimal.valueOf(24000))
-                .inStock(4)
-                .category("Laptop")
-                .build());
+    void seedProducts() {
+        save(product("P002", "Desk Lamp", "lighting", "", "500.00", 10));
+        save(product("P003", "ASUS TUF", "laptops", "asus", "24000.00", 4));
+        save(product("PH-A55-128", "Samsung Galaxy A55 128GB", "mobile-phones", "samsung",
+                "18500.00", 7));
     }
 
     @Override
     public List<Product> findAll() {
-        return myProducts;
+        return new ArrayList<>(products.values());
     }
 
     @Override
     public Product findBySku(String sku) {
-        for (Product product : myProducts) {
-            if (product.getSku().equals(sku)) {
-                return product;
-            }
-        }
-        return null;
+        return products.get(sku);
     }
 
     @Override
     public void save(Product product) {
-        myProducts.add(product);
+        products.put(product.getSku(), product);
+    }
+
+    private static Product product(String sku, String name, String category,
+                                   String brandSlug, String price, int inStock) {
+        return Product.builder()
+                .sku(sku)
+                .name(name)
+                .category(category)
+                .brandSlug(brandSlug)
+                .price(new BigDecimal(price))
+                .inStock(inStock)
+                .build();
     }
 }

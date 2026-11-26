@@ -21,6 +21,7 @@ public class Product {
     private String name;
     @NotBlank
     private String category;
+    private String brandSlug;
     @Positive(message = "price must be greater than zero.")
     private BigDecimal price;
     @PositiveOrZero
